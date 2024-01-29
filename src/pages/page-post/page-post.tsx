@@ -1,18 +1,16 @@
 import { Link, useParams } from "react-router-dom";
 import { AppRoute } from "../../const";
-import { useAppSelector } from "../../store/hooks";
-import { selectPosts } from "../../store/data-process/selectors";
 import PostCard from "../../components/Post-card/PostCard";
+import { useFetchPostByIdQuery } from "../../store-query/post-api";
 
 export default function PagePost () {
-    const posts = useAppSelector(selectPosts);
     const {id} = useParams()
-    const currentPost = posts?.find((post) => post.id === Number(id))
+    const {data} = useFetchPostByIdQuery(Number(id))
 
-    return (currentPost &&
+    return (data &&
         <>
             <h1>Тут будет пост</h1>
-            <PostCard post={currentPost} currentPost={true}/>
+            <PostCard post={data} currentPost={true}/>
             <Link to={AppRoute.Main}>Вернуться на главную</Link>
         </>
     )

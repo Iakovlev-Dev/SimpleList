@@ -1,18 +1,20 @@
 import PostCard from "../../components/Post-card/PostCard";
-import { selectPosts } from "../../store/data-process/selectors";
-import { useAppSelector } from "../../store/hooks";
+import { useFetchPostsQuery } from "../../store-query/post-api";
 
 
 export default function PageMain () {
-    const posts = useAppSelector(selectPosts);
+    // const posts = useAppSelector(selectPosts);
     
-    
+    const {data = [], isLoading} = useFetchPostsQuery()
+
+    if(isLoading) return <h1>Loading...</h1>
+
     return (
         <>
             <h1>Самый простой список постов</h1>
             <div className="list-posts">
                 <ul>
-                {posts?.map((item) => 
+                {data?.map((item) => 
                     <li key={item.id}>
                         <PostCard post={item} />
                     </li>
