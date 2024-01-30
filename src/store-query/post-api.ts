@@ -9,7 +9,9 @@ export const postApi = createApi({
     baseQuery: fetchBaseQuery({baseUrl: BASE_URL}),
     endpoints: (builder) => ({
         fetchPosts: builder.query<TPostArray, undefined>({
-            query: ()=> `/posts`,
+            query: ()=> ({
+                url: `/posts`,
+            }),
         }),
         fetchPostById: builder.query<TPost, number>({
             query: (id: number) => ({
